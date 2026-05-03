@@ -1,0 +1,464 @@
+openapi: 3.0.3
+info:
+  title: AudD Music Recognition API
+  version: 1.0.0
+  description: |
+    Locally maintained OpenAPI description for the public AudD music
+    recognition endpoints documented at https://docs.audd.io/.
+servers:
+  - url: https://api.audd.io
+    description: AudD API
+security:
+  - ApiToken: []
+tags:
+  - name: Recognition
+    description: Recognize music in short audio samples.
+  - name: Streams
+    description: Manage realtime stream recognition.
+  - name: Enterprise
+    description: Scan long audio and video files.
+paths:
+  /:
+    get:
+      operationId: recognizeByUrl
+      tags:
+        - Recognition
+      summary: Recognize audio by URL
+      description: Recognizes music from a public audio or video URL.
+      parameters:
+        - name: url
+          in: query
+          required: true
+          schema:
+            type: string
+            format: uri
+          description: URL of the file to recognize.
+        - name: return
+          in: query
+          required: false
+          schema:
+            type: string
+          description: Comma-separated additional metadata identifiers, such as apple_music, spotify, deezer, napster, or musicbrainz.
+        - name: market
+          in: query
+          required: false
+          schema:
+            type: string
+            default: us
+          description: Country code for Apple Music, iTunes, and Spotify results.
+      responses:
+        '200':
+          description: Recognition response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RecognitionResponse'
+    post:
+      operationId: recognize
+      tags:
+        - Recognition
+      summary: Recognize audio
+      description: Recognizes music from a public URL, an uploaded file, or a base64-encoded audio string.
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/RecognizeRequest'
+      responses:
+        '200':
+          description: Recognition response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RecognitionResponse'
+  /setCallbackUrl/:
+    post:
+      operationId: setCallbackUrl
+      tags:
+        - Streams
+      summary: Set callback URL
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              required:
+                - url
+              properties:
+                url:
+                  type: string
+                  format: uri
+                  description: URL that receives stream recognition callbacks.
+      responses:
+        '200':
+          description: Callback URL was set.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NullResultResponse'
+  /getCallbackUrl/:
+    post:
+      operationId: getCallbackUrl
+      tags:
+        - Streams
+      summary: Get callback URL
+      responses:
+        '200':
+          description: Current callback URL.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetCallbackUrlResponse'
+  /addStream/:
+    post:
+      operationId: addStream
+      tags:
+        - Streams
+      summary: Add stream
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              required:
+                - url
+                - radio_id
+              properties:
+                url:
+                  type: string
+                  description: Audio stream URL, twitch channel token, or YouTube live stream token.
+                radio_id:
+                  type: integer
+                  format: int64
+                  description: Caller-supplied integer stream identifier.
+                callbacks:
+                  type: string
+                  description: Set to before to receive callbacks when a song starts.
+      responses:
+        '200':
+          description: Stream was added.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NullResultResponse'
+  /getStreams/:
+    post:
+      operationId: getStreams
+      tags:
+        - Streams
+      summary: Get streams
+      responses:
+        '200':
+          description: Configured streams.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetStreamsResponse'
+  /longpoll/:
+    get:
+      operationId: longPoll
+      tags:
+        - Streams
+      summary: Long poll stream results
+      description: Reads stream recognition callbacks via long polling. This endpoint uses a longpoll category, not the API token.
+      security: []
+      parameters:
+        - name: category
+          in: query
+          required: true
+          schema:
+            type: string
+          description: Longpoll category from getStreams or derived from the API token and radio id.
+        - name: timeout
+          in: query
+          required: false
+          schema:
+            type: integer
+            default: 50
+          description: Long poll timeout in seconds.
+        - name: since_time
+          in: query
+          required: false
+          schema:
+            type: integer
+            format: int64
+          description: Timestamp from the previous longpoll response.
+      responses:
+        '200':
+          description: Long poll response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LongPollResponse'
+  /setStreamUrl/:
+    post:
+      operationId: setStreamUrl
+      tags:
+        - Streams
+      summary: Update stream URL
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              required:
+                - url
+                - radio_id
+              properties:
+                url:
+                  type: string
+                  description: New URL of the audio stream.
+                radio_id:
+                  type: integer
+                  format: int64
+                  description: Caller-supplied integer stream identifier.
+      responses:
+        '200':
+          description: Stream URL was updated.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NullResultResponse'
+  /deleteStream/:
+    post:
+      operationId: deleteStream
+      tags:
+        - Streams
+      summary: Delete stream
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              required:
+                - radio_id
+              properties:
+                radio_id:
+                  type: integer
+                  format: int64
+                  description: Caller-supplied integer stream identifier.
+      responses:
+        '200':
+          description: Stream was deleted.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NullResultResponse'
+  /enterprise:
+    post:
+      operationId: recognizeEnterprise
+      tags:
+        - Enterprise
+      summary: Recognize long audio or video
+      description: Recognizes music from long audio and video files using AudD's enterprise endpoint.
+      servers:
+        - url: https://enterprise.audd.io
+          description: AudD Enterprise API
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/EnterpriseRecognizeRequest'
+      responses:
+        '200':
+          description: Enterprise recognition response.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EnterpriseRecognitionResponse'
+components:
+  securitySchemes:
+    ApiToken:
+      type: apiKey
+      in: query
+      name: api_token
+      description: AudD API token from the dashboard.
+  schemas:
+    RecognizeRequest:
+      type: object
+      properties:
+        url:
+          type: string
+          format: uri
+          description: URL of the file to recognize.
+        file:
+          type: string
+          format: binary
+          description: Audio or video file to recognize.
+        audio:
+          type: string
+          description: Base64-encoded audio. AudD discourages this transport and supports it only in limited cases.
+        return:
+          type: string
+          description: Comma-separated additional metadata identifiers.
+        market:
+          type: string
+          description: Country code for Apple Music, iTunes, and Spotify results.
+    EnterpriseRecognizeRequest:
+      type: object
+      properties:
+        url:
+          type: string
+          format: uri
+          description: URL of the file or page to scan.
+        file:
+          type: string
+          format: binary
+          description: Audio or video file to scan.
+        accurate_offsets:
+          type: string
+          description: Set to true to request accurate start and end offsets.
+        skip:
+          type: integer
+          description: Number of 12-second chunks skipped after recognized chunks.
+        every:
+          type: integer
+          description: Number of chunks to recognize in a row.
+        limit:
+          type: integer
+          description: Upper bound for the number of chunks to recognize.
+        skip_first_seconds:
+          type: integer
+          description: Seconds to skip before starting recognition.
+        use_timecode:
+          type: string
+          description: Set to true to use time information from the submitted URL as skip_first_seconds.
+    RecognitionResponse:
+      type: object
+      required:
+        - status
+      properties:
+        status:
+          type: string
+        result:
+          nullable: true
+          allOf:
+            - $ref: '#/components/schemas/RecognitionResult'
+      additionalProperties: true
+    RecognitionResult:
+      type: object
+      properties:
+        artist:
+          type: string
+        title:
+          type: string
+        album:
+          type: string
+        release_date:
+          type: string
+        label:
+          type: string
+        timecode:
+          type: string
+        song_link:
+          type: string
+          format: uri
+      additionalProperties: true
+    NullResultResponse:
+      type: object
+      required:
+        - status
+      properties:
+        status:
+          type: string
+        result:
+          nullable: true
+      additionalProperties: true
+    GetCallbackUrlResponse:
+      type: object
+      required:
+        - status
+      properties:
+        status:
+          type: string
+        result:
+          type: string
+          nullable: true
+      additionalProperties: true
+    GetStreamsResponse:
+      type: object
+      required:
+        - status
+      properties:
+        status:
+          type: string
+        result:
+          type: array
+          items:
+            $ref: '#/components/schemas/StreamInfo'
+      additionalProperties: true
+    StreamInfo:
+      type: object
+      properties:
+        radio_id:
+          type: integer
+          format: int64
+        url:
+          type: string
+        stream_running:
+          type: boolean
+        longpoll_category:
+          type: string
+      additionalProperties: true
+    LongPollResponse:
+      type: object
+      additionalProperties: true
+    EnterpriseRecognitionResponse:
+      type: object
+      required:
+        - status
+      properties:
+        status:
+          type: string
+        result:
+          type: array
+          items:
+            $ref: '#/components/schemas/EnterpriseSegment'
+        execution_time:
+          type: string
+      additionalProperties: true
+    EnterpriseSegment:
+      type: object
+      properties:
+        offset:
+          type: string
+        songs:
+          type: array
+          items:
+            $ref: '#/components/schemas/EnterpriseSong'
+      additionalProperties: true
+    EnterpriseSong:
+      type: object
+      properties:
+        score:
+          type: integer
+        artist:
+          type: string
+        title:
+          type: string
+        album:
+          type: string
+        release_date:
+          type: string
+        label:
+          type: string
+        timecode:
+          type: string
+        isrc:
+          type: string
+        upc:
+          type: string
+        song_link:
+          type: string
+          format: uri
+        start_offset:
+          type: integer
+        end_offset:
+          type: integer
+      additionalProperties: true
