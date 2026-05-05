@@ -47,7 +47,7 @@ namespace AudD
         /// <summary>
         /// Scan long audio and video files.
         /// </summary>
-        public EnterpriseClient Enterprise => new EnterpriseClient(HttpClient, authorizations: Authorizations, options: Options)
+        public EnterpriseClient Enterprise => new EnterpriseClient(HttpClient, baseUri: null, authorizations: Authorizations, options: Options)
         {
             ReadResponseAsString = ReadResponseAsString,
             JsonSerializerContext = JsonSerializerContext,
@@ -57,7 +57,7 @@ namespace AudD
         /// <summary>
         /// Recognize music in short audio samples.
         /// </summary>
-        public RecognitionClient Recognition => new RecognitionClient(HttpClient, authorizations: Authorizations, options: Options)
+        public RecognitionClient Recognition => new RecognitionClient(HttpClient, baseUri: null, authorizations: Authorizations, options: Options)
         {
             ReadResponseAsString = ReadResponseAsString,
             JsonSerializerContext = JsonSerializerContext,
@@ -67,7 +67,7 @@ namespace AudD
         /// <summary>
         /// Manage realtime stream recognition.
         /// </summary>
-        public StreamsClient Streams => new StreamsClient(HttpClient, authorizations: Authorizations, options: Options)
+        public StreamsClient Streams => new StreamsClient(HttpClient, baseUri: null, authorizations: Authorizations, options: Options)
         {
             ReadResponseAsString = ReadResponseAsString,
             JsonSerializerContext = JsonSerializerContext,
@@ -135,10 +135,10 @@ namespace AudD
         /// <param name="options">Client-wide request defaults such as headers, query parameters, retries, and timeout.</param>
         /// <param name="disposeHttpClient">Dispose the HttpClient when the instance is disposed. True by default.</param>
         public AudDClient(
-            global::System.Net.Http.HttpClient? httpClient = null,
-            global::System.Uri? baseUri = null,
-            global::System.Collections.Generic.List<global::AudD.EndPointAuthorization>? authorizations = null,
-            global::AudD.AutoSDKClientOptions? options = null,
+            global::System.Net.Http.HttpClient? httpClient,
+            global::System.Uri? baseUri,
+            global::System.Collections.Generic.List<global::AudD.EndPointAuthorization>? authorizations,
+            global::AudD.AutoSDKClientOptions? options,
             bool disposeHttpClient = true)
         {
 
