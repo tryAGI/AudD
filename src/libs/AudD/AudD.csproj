@@ -5,6 +5,7 @@
   </PropertyGroup>
 
   <PropertyGroup Label="Nuget">
+    <PackageId>tryAGI.AudD</PackageId>
     <Description>C# SDK for the AudD API -- music recognition for files, streams, and long-form audio.</Description>
     <PackageTags>AudD;music-recognition;audio-fingerprinting;audio;streams;ai;sdk;dotnet;openapi</PackageTags>
     <NoWarn>$(NoWarn);CS1591</NoWarn>

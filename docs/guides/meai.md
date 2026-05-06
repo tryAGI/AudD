@@ -8,7 +8,7 @@ The AudD SDK provides integration with [Microsoft.Extensions.AI](https://learn.m
 ## Installation
 
 ```bash
-dotnet add package AudD
+dotnet add package tryAGI.AudD
 ```
 
 ## Usage
