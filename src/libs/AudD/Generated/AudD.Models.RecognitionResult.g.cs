@@ -93,5 +93,6 @@ namespace AudD
         public RecognitionResult()
         {
         }
+
     }
 }

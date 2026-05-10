@@ -58,5 +58,6 @@ namespace AudD
         public EnterpriseRecognitionResponse()
         {
         }
+
     }
 }

@@ -54,5 +54,6 @@ namespace AudD
         public SetStreamUrlRequest()
         {
         }
+
     }
 }
