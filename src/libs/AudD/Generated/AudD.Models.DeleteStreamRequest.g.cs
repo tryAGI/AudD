@@ -42,5 +42,6 @@ namespace AudD
         public DeleteStreamRequest()
         {
         }
+
     }
 }
