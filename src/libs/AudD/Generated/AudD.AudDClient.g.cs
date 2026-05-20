@@ -164,10 +164,7 @@ namespace AudD
         {
 
             HttpClient = httpClient ?? new global::System.Net.Http.HttpClient();
-            if (baseUri is not null)
-            {
-                HttpClient.BaseAddress ??= baseUri;
-            }
+            HttpClient.BaseAddress ??= baseUri ?? new global::System.Uri(DefaultBaseUrl);
             Authorizations = authorizations ?? new global::System.Collections.Generic.List<global::AudD.EndPointAuthorization>();
             Options = options ?? new global::AudD.AutoSDKClientOptions();
             _disposeHttpClient = disposeHttpClient;
@@ -280,7 +277,7 @@ namespace AudD
                 return explicitBaseUri;
             }
 
-            return ResolveSelectedServer()?.Uri ?? (s_availableServers.Length > 0 ? s_availableServers[0].Uri : HttpClient.BaseAddress);
+            return ResolveSelectedServer()?.Uri ?? HttpClient.BaseAddress;
         }
 
         private global::System.Uri? ResolveBaseUri(
