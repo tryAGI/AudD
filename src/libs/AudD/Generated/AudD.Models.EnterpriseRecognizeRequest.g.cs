@@ -129,5 +129,6 @@ namespace AudD
         public EnterpriseRecognizeRequest()
         {
         }
+
     }
 }

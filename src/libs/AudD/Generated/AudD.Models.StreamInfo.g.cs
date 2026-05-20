@@ -66,5 +66,6 @@ namespace AudD
         public StreamInfo()
         {
         }
+
     }
 }
