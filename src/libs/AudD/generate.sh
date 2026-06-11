@@ -16,3 +16,20 @@ autosdk generate openapi.yaml \
   --output Generated \
   --exclude-deprecated-operations \
   --security-scheme ApiKey:Query:api_token
+
+rm -rf ../../cli/AudD.CLI
+
+autosdk cli-project openapi.yaml \
+  --output ../../cli/AudD.CLI \
+  --sdk-project ../../libs/AudD/AudD.csproj \
+  --targetFramework net10.0 \
+  --namespace AudD \
+  --clientClassName AudDClient \
+  --package-id AudD.CLI \
+  --tool-command-name aud-d \
+  --user-secrets-id AudD.CLI \
+  --api-key-env-var AUDD_API_KEY \
+  --base-url-env-var AUDD_BASE_URL \
+  --cli-credential-file \
+  --exclude-deprecated-operations \
+  --security-scheme ApiKey:Query:api_token

@@ -44,6 +44,13 @@ var response = await client.Recognition.RecognizeByUrlAsync(
     @return: "apple_music,spotify");
 ```
 
+### CLI
+
+```bash
+dotnet tool install --global AudD.CLI --prerelease
+aud-d api --help
+```
+
 <!-- EXAMPLES:START -->
 ### Recognize Audio
 Basic example showing how to identify a song from an audio URL.
