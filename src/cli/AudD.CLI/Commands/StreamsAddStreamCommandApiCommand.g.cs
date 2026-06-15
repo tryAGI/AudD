@@ -95,7 +95,7 @@ internal static partial class StreamsAddStreamCommandApiCommand
                             cancellationToken).ConfigureAwait(false);
                         var url = parseResult.GetRequiredValue(Url);
                         var radioId = parseResult.GetRequiredValue(RadioId);
-                        var callbacks = CliRuntime.WasSpecified(parseResult, Callbacks) ? parseResult.GetValue(Callbacks) : __requestBase is not null ? __requestBase.Callbacks : default;
+                        var callbacks = CliRuntime.WasSpecified(parseResult, Callbacks) ? parseResult.GetValue(Callbacks) : (__requestBase is { } __CallbacksBaseValue ? __CallbacksBaseValue.Callbacks : default);
                 using var client = await CliRuntime.CreateClientAsync(parseResult, cancellationToken).ConfigureAwait(false);
 
 
