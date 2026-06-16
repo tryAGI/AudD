@@ -135,15 +135,15 @@ Recognizes music from long audio and video files using AudD's enterprise endpoin
                             RequestFile,
                             global::AudD.SourceGenerationContext.Default,
                             cancellationToken).ConfigureAwait(false);
-                        var url = CliRuntime.WasSpecified(parseResult, Url) ? parseResult.GetValue(Url) : __requestBase is not null ? __requestBase.Url : default;
-                        var file = CliRuntime.WasSpecified(parseResult, File) ? parseResult.GetValue(File) : __requestBase is not null ? __requestBase.File : default;
-                        var filename = CliRuntime.WasSpecified(parseResult, Filename) ? parseResult.GetValue(Filename) : __requestBase is not null ? __requestBase.Filename : default;
-                        var accurateOffsets = CliRuntime.WasSpecified(parseResult, AccurateOffsets) ? parseResult.GetValue(AccurateOffsets) : __requestBase is not null ? __requestBase.AccurateOffsets : default;
-                        var skip = CliRuntime.WasSpecified(parseResult, Skip) ? parseResult.GetValue(Skip) : __requestBase is not null ? __requestBase.Skip : default;
-                        var every = CliRuntime.WasSpecified(parseResult, Every) ? parseResult.GetValue(Every) : __requestBase is not null ? __requestBase.Every : default;
-                        var limit = CliRuntime.WasSpecified(parseResult, Limit) ? parseResult.GetValue(Limit) : __requestBase is not null ? __requestBase.Limit : default;
-                        var skipFirstSeconds = CliRuntime.WasSpecified(parseResult, SkipFirstSeconds) ? parseResult.GetValue(SkipFirstSeconds) : __requestBase is not null ? __requestBase.SkipFirstSeconds : default;
-                        var useTimecode = CliRuntime.WasSpecified(parseResult, UseTimecode) ? parseResult.GetValue(UseTimecode) : __requestBase is not null ? __requestBase.UseTimecode : default;
+                        var url = CliRuntime.WasSpecified(parseResult, Url) ? parseResult.GetValue(Url) : (__requestBase is { } __UrlBaseValue ? __UrlBaseValue.Url : default);
+                        var file = CliRuntime.WasSpecified(parseResult, File) ? parseResult.GetValue(File) : (__requestBase is { } __FileBaseValue ? __FileBaseValue.File : default);
+                        var filename = CliRuntime.WasSpecified(parseResult, Filename) ? parseResult.GetValue(Filename) : (__requestBase is { } __FilenameBaseValue ? __FilenameBaseValue.Filename : default);
+                        var accurateOffsets = CliRuntime.WasSpecified(parseResult, AccurateOffsets) ? parseResult.GetValue(AccurateOffsets) : (__requestBase is { } __AccurateOffsetsBaseValue ? __AccurateOffsetsBaseValue.AccurateOffsets : default);
+                        var skip = CliRuntime.WasSpecified(parseResult, Skip) ? parseResult.GetValue(Skip) : (__requestBase is { } __SkipBaseValue ? __SkipBaseValue.Skip : default);
+                        var every = CliRuntime.WasSpecified(parseResult, Every) ? parseResult.GetValue(Every) : (__requestBase is { } __EveryBaseValue ? __EveryBaseValue.Every : default);
+                        var limit = CliRuntime.WasSpecified(parseResult, Limit) ? parseResult.GetValue(Limit) : (__requestBase is { } __LimitBaseValue ? __LimitBaseValue.Limit : default);
+                        var skipFirstSeconds = CliRuntime.WasSpecified(parseResult, SkipFirstSeconds) ? parseResult.GetValue(SkipFirstSeconds) : (__requestBase is { } __SkipFirstSecondsBaseValue ? __SkipFirstSecondsBaseValue.SkipFirstSeconds : default);
+                        var useTimecode = CliRuntime.WasSpecified(parseResult, UseTimecode) ? parseResult.GetValue(UseTimecode) : (__requestBase is { } __UseTimecodeBaseValue ? __UseTimecodeBaseValue.UseTimecode : default);
                 using var client = await CliRuntime.CreateClientAsync(parseResult, cancellationToken).ConfigureAwait(false);
 
 

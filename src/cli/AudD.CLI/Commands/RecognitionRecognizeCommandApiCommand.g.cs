@@ -114,12 +114,12 @@ Recognizes music from a public URL, an uploaded file, or a base64-encoded audio 
                             RequestFile,
                             global::AudD.SourceGenerationContext.Default,
                             cancellationToken).ConfigureAwait(false);
-                        var url = CliRuntime.WasSpecified(parseResult, Url) ? parseResult.GetValue(Url) : __requestBase is not null ? __requestBase.Url : default;
-                        var file = CliRuntime.WasSpecified(parseResult, File) ? parseResult.GetValue(File) : __requestBase is not null ? __requestBase.File : default;
-                        var filename = CliRuntime.WasSpecified(parseResult, Filename) ? parseResult.GetValue(Filename) : __requestBase is not null ? __requestBase.Filename : default;
-                        var audio = CliRuntime.WasSpecified(parseResult, Audio) ? parseResult.GetValue(Audio) : __requestBase is not null ? __requestBase.Audio : default;
-                        var @return = CliRuntime.WasSpecified(parseResult, Return) ? parseResult.GetValue(Return) : __requestBase is not null ? __requestBase.Return : default;
-                        var market = CliRuntime.WasSpecified(parseResult, Market) ? parseResult.GetValue(Market) : __requestBase is not null ? __requestBase.Market : default;
+                        var url = CliRuntime.WasSpecified(parseResult, Url) ? parseResult.GetValue(Url) : (__requestBase is { } __UrlBaseValue ? __UrlBaseValue.Url : default);
+                        var file = CliRuntime.WasSpecified(parseResult, File) ? parseResult.GetValue(File) : (__requestBase is { } __FileBaseValue ? __FileBaseValue.File : default);
+                        var filename = CliRuntime.WasSpecified(parseResult, Filename) ? parseResult.GetValue(Filename) : (__requestBase is { } __FilenameBaseValue ? __FilenameBaseValue.Filename : default);
+                        var audio = CliRuntime.WasSpecified(parseResult, Audio) ? parseResult.GetValue(Audio) : (__requestBase is { } __AudioBaseValue ? __AudioBaseValue.Audio : default);
+                        var @return = CliRuntime.WasSpecified(parseResult, Return) ? parseResult.GetValue(Return) : (__requestBase is { } __ReturnBaseValue ? __ReturnBaseValue.Return : default);
+                        var market = CliRuntime.WasSpecified(parseResult, Market) ? parseResult.GetValue(Market) : (__requestBase is { } __MarketBaseValue ? __MarketBaseValue.Market : default);
                 using var client = await CliRuntime.CreateClientAsync(parseResult, cancellationToken).ConfigureAwait(false);
 
 
