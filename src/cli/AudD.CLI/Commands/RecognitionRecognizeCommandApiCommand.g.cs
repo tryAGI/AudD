@@ -118,7 +118,7 @@ Recognizes music from a public URL, an uploaded file, or a base64-encoded audio 
                         var file = CliRuntime.WasSpecified(parseResult, File) ? parseResult.GetValue(File) : (__requestBase is { } __FileBaseValue ? __FileBaseValue.File : default);
                         var filename = CliRuntime.WasSpecified(parseResult, Filename) ? parseResult.GetValue(Filename) : (__requestBase is { } __FilenameBaseValue ? __FilenameBaseValue.Filename : default);
                         var audio = CliRuntime.WasSpecified(parseResult, Audio) ? parseResult.GetValue(Audio) : (__requestBase is { } __AudioBaseValue ? __AudioBaseValue.Audio : default);
-                        var @return = CliRuntime.WasSpecified(parseResult, Return) ? parseResult.GetValue(Return) : (__requestBase is { } __@returnBaseValue ? __@returnBaseValue.Return : default);
+                        var @return = CliRuntime.WasSpecified(parseResult, Return) ? parseResult.GetValue(Return) : (__requestBase is { } __ReturnBaseValue ? __ReturnBaseValue.Return : default);
                         var market = CliRuntime.WasSpecified(parseResult, Market) ? parseResult.GetValue(Market) : (__requestBase is { } __MarketBaseValue ? __MarketBaseValue.Market : default);
                 using var client = await CliRuntime.CreateClientAsync(parseResult, cancellationToken).ConfigureAwait(false);
 
