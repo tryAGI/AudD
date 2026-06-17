@@ -24,14 +24,12 @@ internal static class CliRuntime
             ? new global::System.Collections.Generic.List<global::AudD.EndPointAuthorization>()
             : new global::System.Collections.Generic.List<global::AudD.EndPointAuthorization>
             {
-        new global::AudD.EndPointAuthorization
-        {
-            Type = "ApiKey",
-            SchemeId = "ApikeyApiToken",
-            Location = "Query",
-            Name = "api_token",
-            Value = apiKey,
-        },
+        CreateAuthorization(
+            type: "ApiKey",
+            schemeId: "ApikeyApiToken",
+            location: "Query",
+            name: "api_token",
+            value: apiKey),
             };
         var baseUri = ResolveBaseUri(parseResult);
 
@@ -40,6 +38,30 @@ internal static class CliRuntime
             baseUri: baseUri,
             authorizations: authorizations,
             disposeHttpClient: true);
+    }
+
+    private static global::AudD.EndPointAuthorization CreateAuthorization(
+        string type,
+        string schemeId,
+        string location,
+        string name,
+        string value)
+    {
+        var authorization = new global::AudD.EndPointAuthorization
+        {
+            Type = type,
+            Location = location,
+            Name = name,
+            Value = value,
+        };
+
+        var schemeIdProperty = typeof(global::AudD.EndPointAuthorization).GetProperty("SchemeId");
+        if (schemeIdProperty?.CanWrite == true)
+        {
+            schemeIdProperty.SetValue(authorization, schemeId);
+        }
+
+        return authorization;
     }
 
     [System.Diagnostics.CodeAnalysis.SuppressMessage(
