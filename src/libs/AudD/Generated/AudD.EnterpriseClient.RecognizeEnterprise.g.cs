@@ -6,6 +6,14 @@ namespace AudD
     public partial class EnterpriseClient
     {
 
+        private static readonly global::AudD.AutoSDKServer[] s_RecognizeEnterpriseServers = new global::AudD.AutoSDKServer[]
+        {            new global::AudD.AutoSDKServer(
+                id: "https-enterprise-audd-io",
+                name: "AudD Enterprise API",
+                url: "https://enterprise.audd.io/",
+                description: "AudD Enterprise API"),
+        };
+
 
         private static readonly global::AudD.EndPointSecurityRequirement s_RecognizeEnterpriseSecurityRequirement0 =
             new global::AudD.EndPointSecurityRequirement
@@ -111,7 +119,9 @@ namespace AudD
 
                             var __pathBuilder = new global::AudD.PathBuilder(
                                 path: "/enterprise",
-                                baseUri: HttpClient.BaseAddress ?? new global::System.Uri("https://enterprise.audd.io/", global::System.UriKind.RelativeOrAbsolute));
+                                baseUri: ResolveBaseUri(
+                                servers: s_RecognizeEnterpriseServers,
+                                defaultBaseUrl: "https://enterprise.audd.io/"));
                             foreach (var __authorization in __authorizations)
                             {
                                 if (__authorization.Type == "ApiKey" &&
