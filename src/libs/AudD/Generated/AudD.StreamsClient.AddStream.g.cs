@@ -130,12 +130,22 @@ namespace AudD
                 __httpRequest.Version = global::System.Net.HttpVersion.Version11;
                 __httpRequest.VersionPolicy = global::System.Net.Http.HttpVersionPolicy.RequestVersionOrHigher;
 #endif
-                            var __httpRequestContentBody = request.ToJson(JsonSerializerContext);
-                            var __httpRequestContent = new global::System.Net.Http.StringContent(
-                                content: __httpRequestContentBody,
-                                encoding: global::System.Text.Encoding.UTF8,
-                                mediaType: "application/x-www-form-urlencoded");
+                            var __formValues = new global::System.Collections.Generic.List<global::System.Collections.Generic.KeyValuePair<string, string>>();
+                            __formValues.Add(new global::System.Collections.Generic.KeyValuePair<string, string>(
+                                "url",
+                                request.Url ?? string.Empty));
+                            __formValues.Add(new global::System.Collections.Generic.KeyValuePair<string, string>(
+                                "radio_id",
+                                global::System.Convert.ToString(request.RadioId, global::System.Globalization.CultureInfo.InvariantCulture) ?? string.Empty));
+                            if (request.Callbacks != default)
+                            {
+                                __formValues.Add(new global::System.Collections.Generic.KeyValuePair<string, string>(
+                                    "callbacks",
+                                    request.Callbacks ?? string.Empty));
+                            }
+                            var __httpRequestContent = new global::System.Net.Http.FormUrlEncodedContent(__formValues);
                             __httpRequest.Content = __httpRequestContent;
+
                 global::AudD.AutoSDKRequestOptionsSupport.ApplyHeaders(
                     request: __httpRequest,
                     clientHeaders: Options.Headers,
