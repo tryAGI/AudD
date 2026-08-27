@@ -4,30 +4,30 @@
 namespace AudD
 {
     /// <summary>
-    /// 
+    ///
     /// </summary>
     public sealed partial class StreamInfo
     {
         /// <summary>
-        /// 
+        ///
         /// </summary>
         [global::System.Text.Json.Serialization.JsonPropertyName("radio_id")]
         public long? RadioId { get; set; }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         [global::System.Text.Json.Serialization.JsonPropertyName("url")]
         public string? Url { get; set; }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         [global::System.Text.Json.Serialization.JsonPropertyName("stream_running")]
         public bool? StreamRunning { get; set; }
 
         /// <summary>
-        /// 
+        ///
         /// </summary>
         [global::System.Text.Json.Serialization.JsonPropertyName("longpoll_category")]
         public string? LongpollCategory { get; set; }

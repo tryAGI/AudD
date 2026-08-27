@@ -4,7 +4,7 @@
 namespace AudD
 {
     /// <summary>
-    /// 
+    ///
     /// </summary>
     public sealed partial class RecognizeRequest
     {
