@@ -8,6 +8,7 @@
     <PackAsTool>true</PackAsTool>
     <GeneratePackageOnBuild Condition=" '$(Configuration)' == 'Release' ">true</GeneratePackageOnBuild>
     <PackageId>AudD.CLI</PackageId>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <ToolCommandName>aud-d</ToolCommandName>
     <UserSecretsId>AudD.CLI</UserSecretsId>
