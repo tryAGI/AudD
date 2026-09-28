@@ -46,6 +46,8 @@ internal static partial class RecognitionRecognizeByUrlCommandApiCommand
                     static partial void CustomizeResponseFormatHints(Dictionary<string, CliFormatHint> hints);
 
 
+    static partial void CustomizeCommand(ref Command command);
+
     public static Command Create()
     {
         var command = new Command(@"recognize-by-url", @"Recognize audio by URL
@@ -78,6 +80,7 @@ Recognizes music from a public audio or video URL.");
                                     FormatResponse,
                                     cancellationToken).ConfigureAwait(false);
             }, cancellationToken).ConfigureAwait(false));
+        CustomizeCommand(ref command);
         return command;
     }
 }

@@ -79,6 +79,8 @@ internal static partial class RecognitionRecognizeCommandApiCommand
                     static partial void CustomizeResponseFormatHints(Dictionary<string, CliFormatHint> hints);
 
 
+    static partial void CustomizeCommand(ref Command command);
+
     public static Command Create()
     {
         var command = new Command(@"recognize", @"Recognize audio
@@ -140,6 +142,7 @@ Recognizes music from a public URL, an uploaded file, or a base64-encoded audio 
                                     FormatResponse,
                                     cancellationToken).ConfigureAwait(false);
             }, cancellationToken).ConfigureAwait(false));
+        CustomizeCommand(ref command);
         return command;
     }
 }

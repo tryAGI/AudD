@@ -97,6 +97,8 @@ internal static partial class EnterpriseRecognizeEnterpriseCommandApiCommand
                     static partial void CustomizeResponseFormatHints(Dictionary<string, CliFormatHint> hints);
 
 
+    static partial void CustomizeCommand(ref Command command);
+
     public static Command Create()
     {
         var command = new Command(@"recognize-enterprise", @"Recognize long audio or video
@@ -175,6 +177,7 @@ Recognizes music from long audio and video files using AudD's enterprise endpoin
                                     cancellationToken).ConfigureAwait(false);
                                 }
             }, cancellationToken).ConfigureAwait(false));
+        CustomizeCommand(ref command);
         return command;
     }
 }
