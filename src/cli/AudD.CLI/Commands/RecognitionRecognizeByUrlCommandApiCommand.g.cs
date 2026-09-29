@@ -48,9 +48,9 @@ internal static partial class RecognitionRecognizeByUrlCommandApiCommand
 
     static partial void CustomizeCommand(ref Command command);
 
-    public static Command Create()
+    public static Command Create(string? commandName = null)
     {
-        var command = new Command(@"recognize-by-url", @"Recognize audio by URL
+        var command = new Command(commandName ?? @"recognize-by-url", @"Recognize audio by URL
 Recognizes music from a public audio or video URL.");
                         command.Options.Add(Url);
                         command.Options.Add(Return);

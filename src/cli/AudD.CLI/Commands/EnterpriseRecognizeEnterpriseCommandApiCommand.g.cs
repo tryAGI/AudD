@@ -99,9 +99,9 @@ internal static partial class EnterpriseRecognizeEnterpriseCommandApiCommand
 
     static partial void CustomizeCommand(ref Command command);
 
-    public static Command Create()
+    public static Command Create(string? commandName = null)
     {
-        var command = new Command(@"recognize-enterprise", @"Recognize long audio or video
+        var command = new Command(commandName ?? @"recognize-enterprise", @"Recognize long audio or video
 Recognizes music from long audio and video files using AudD's enterprise endpoint.");
                         command.Options.Add(Url);
                         command.Options.Add(File);

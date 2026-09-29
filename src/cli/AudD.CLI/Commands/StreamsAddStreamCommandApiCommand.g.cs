@@ -64,9 +64,9 @@ internal static partial class StreamsAddStreamCommandApiCommand
 
     static partial void CustomizeCommand(ref Command command);
 
-    public static Command Create()
+    public static Command Create(string? commandName = null)
     {
-        var command = new Command(@"add-stream", @"Add stream");
+        var command = new Command(commandName ?? @"add-stream", @"Add stream");
                         command.Arguments.Add(Url);
                         command.Options.Add(RadioId);
                         command.Options.Add(Callbacks);

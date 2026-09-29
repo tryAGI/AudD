@@ -31,9 +31,9 @@ internal static partial class StreamsGetStreamsCommandApiCommand
 
     static partial void CustomizeCommand(ref Command command);
 
-    public static Command Create()
+    public static Command Create(string? commandName = null)
     {
-        var command = new Command(@"get-streams", @"Get streams");
+        var command = new Command(commandName ?? @"get-streams", @"Get streams");
 
 
 

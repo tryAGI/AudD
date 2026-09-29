@@ -48,9 +48,9 @@ internal static partial class StreamsLongPollCommandApiCommand
 
     static partial void CustomizeCommand(ref Command command);
 
-    public static Command Create()
+    public static Command Create(string? commandName = null)
     {
-        var command = new Command(@"long-poll", @"Long poll stream results
+        var command = new Command(commandName ?? @"long-poll", @"Long poll stream results
 Reads stream recognition callbacks via long polling. This endpoint uses a longpoll category, not the API token.");
                         command.Options.Add(Category);
                         command.Options.Add(Timeout);

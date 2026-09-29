@@ -81,9 +81,9 @@ internal static partial class RecognitionRecognizeCommandApiCommand
 
     static partial void CustomizeCommand(ref Command command);
 
-    public static Command Create()
+    public static Command Create(string? commandName = null)
     {
-        var command = new Command(@"recognize", @"Recognize audio
+        var command = new Command(commandName ?? @"recognize", @"Recognize audio
 Recognizes music from a public URL, an uploaded file, or a base64-encoded audio string.");
                         command.Options.Add(Url);
                         command.Options.Add(File);
