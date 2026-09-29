@@ -31,9 +31,9 @@ internal static partial class StreamsGetCallbackUrlCommandApiCommand
 
     static partial void CustomizeCommand(ref Command command);
 
-    public static Command Create()
+    public static Command Create(string? commandName = null)
     {
-        var command = new Command(@"get-callback-url", @"Get callback URL");
+        var command = new Command(commandName ?? @"get-callback-url", @"Get callback URL");
 
 
 

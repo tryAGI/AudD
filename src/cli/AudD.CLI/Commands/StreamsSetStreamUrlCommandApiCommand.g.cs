@@ -42,9 +42,9 @@ internal static partial class StreamsSetStreamUrlCommandApiCommand
 
     static partial void CustomizeCommand(ref Command command);
 
-    public static Command Create()
+    public static Command Create(string? commandName = null)
     {
-        var command = new Command(@"set-stream-url", @"Update stream URL");
+        var command = new Command(commandName ?? @"set-stream-url", @"Update stream URL");
                         command.Arguments.Add(Url);
                         command.Options.Add(RadioId);
 
