@@ -109,7 +109,7 @@ namespace AudD
 
                             var __pathBuilder = new global::AudD.PathBuilder(
                                 path: "/deleteStream/",
-                                baseUri: HttpClient.BaseAddress);
+                                baseUri: HttpClient.BaseAddress ?? new global::System.Uri("https://api.audd.io/", global::System.UriKind.RelativeOrAbsolute));
                             foreach (var __authorization in __authorizations)
                             {
                                 if (__authorization.Type == "ApiKey" &&
