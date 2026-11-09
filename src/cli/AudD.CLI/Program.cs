@@ -14,5 +14,6 @@ rootCommand.Subcommands.Add(AuthCommand.Create());
 rootCommand.Subcommands.Add(EnterpriseApiGroupCommand.Create());
 rootCommand.Subcommands.Add(RecognitionApiGroupCommand.Create());
 rootCommand.Subcommands.Add(StreamsApiGroupCommand.Create());
+rootCommand.Subcommands.Add(CliCompletion.CreateCommand(rootCommand, @"aud-d"));
 
 return await rootCommand.Parse(args).InvokeAsync().ConfigureAwait(false);
